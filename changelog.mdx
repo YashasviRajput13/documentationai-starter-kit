@@ -1,0 +1,124 @@
+---
+title: Changelog
+description: Track the latest updates and improvements to Neuro Grid, including new features and bug fixes.
+---
+
+## Overview
+
+Neuro Grid releases updates regularly to enhance city intelligence features, improve performance, and fix issues. You receive notifications via the dashboard at `https://dashboard.example.com` and email. Check this changelog for details on recent versions.
+
+<Callout kind="info">
+  Upgrade to the latest version for the best experience. Use the dashboard or CLI to update.
+</Callout>
+
+## Recent Releases
+
+<Update label="2024-10-15" description="v1.3.0" tags={["feature", "improvement"]}>
+## New Features
+
+- Added AI copilot enhancements with Google Gemini integration for contextual reasoning and ranked action recommendations.
+- Introduced interactive digital twin rendering with real-time 3D visualizations of traffic flow and congestion zones.
+
+## Improvements
+
+- Optimized YOLO-based computer vision pipeline for `<200ms` latency on vehicle detection.
+- Enhanced heat map generation for better operator insights.
+
+</Update>
+
+<Update label="2024-09-20" description="v1.2.0" tags={["feature", "bugfix"]}>
+## New Features
+
+- Multi-engine AI copilot now generates plain-language rationales with confidence scores.
+- Citizen app updates include live alerts for congestion and rerouting.
+
+## Bug Fixes
+
+- Fixed WebSocket reconnection issues during network interruptions.
+- Resolved rendering glitches in digital twin views for high-density zones.
+
+## Performance
+
+- Reduced API response times by 30% for traffic intelligence endpoints.
+
+</Update>
+
+<Update label="2024-08-10" description="v1.1.0" tags={["breaking", "feature"]}>
+## Breaking Changes
+
+- Updated authentication to require `{API_KEY}` in all requests to `https://api.example.com/v1/traffic`.
+
+## New Features
+
+- Real-time traffic intelligence with YOLO detection and lane density measurement.
+- Initial digital twin prototype with basic city grid visualization.
+
+## Improvements
+
+- Added privacy-first data handling for sensor telemetry.
+
+</Update>
+
+## Upgrading Neuro Grid
+
+Follow these steps to upgrade your Neuro Grid instance.
+
+<Steps>
+  <Step title="Backup Data" icon="database">
+    Export your configuration and telemetry data.
+
+````bash
+neurogrid-cli export --output=backup.json
+````
+  </Step>
+  <Step title="Update CLI" icon="download">
+    Install the latest CLI version.
+
+<CodeGroup tabs="npm,yarn">
+````bash
+npm install -g @neurogrid/cli@latest
+````
+````bash
+yarn global add @neurogrid/cli@latest
+````
+</CodeGroup>
+  </Step>
+  <Step title="Run Upgrade" icon="rocket">
+    Apply the update.
+
+````bash
+neurogrid-cli upgrade --version=1.3.0 --api-key=YOUR_API_KEY
+````
+  </Step>
+</Steps>
+
+## Next Steps
+
+<Columns cols={2}>
+  <Card title="Quickstart" icon="book-open" href="/quickstart">
+    Get started with Neuro Grid in minutes.
+  </Card>
+  <Card title="Authentication" icon="shield" href="/authentication" horizontal>
+    Secure your API access properly.
+  </Card>
+</Columns>
+
+<Expandable title="Migration Guide for v1.0 Users" default-open="false">
+  If upgrading from v1.0, update your endpoint calls:
+
+```javascript
+// Old
+const response = await fetch('https://api.example.com/v1/traffic');
+
+// New
+const response = await fetch('https://api.example.com/v2/traffic', {
+  headers: { 'Authorization': `Bearer ${YOUR_TOKEN}` }
+});
+```
+
+Review full migration notes in the dashboard.
+</Expandable>
+
+<Callout kind="tip">
+  Subscribe to updates at `https://dashboard.example.com/notifications` to stay informed.
+</Callout>

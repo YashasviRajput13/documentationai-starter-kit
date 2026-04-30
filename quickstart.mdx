@@ -1,0 +1,150 @@
+---
+title: Getting Started with Neuro Grid
+description: Set up your account and explore the platform's dashboard to monitor your city's real-time data in minutes.
+---
+
+## Prerequisites
+
+Before diving in, ensure you have:
+
+<Callout kind="info">
+- A modern web browser (Chrome, Firefox, or Safari)
+- Access to city cameras or sensors with RTSP/HTTP streams
+- An Android device for the citizen app (optional for operators)
+</Callout>
+
+<Callout kind="tip">
+Prepare your `API_KEY` from your city authority or admin panel.
+</Callout>
+
+## Create an Account
+
+Sign up in under a minute to access the Neuro Grid dashboard.
+
+<Steps>
+  <Step title="Visit the Platform" icon="globe">
+    Navigate to the [Neuro Grid login page](https://neurogrid-ai.vercel.app/auth/login).
+  </Step>
+  <Step title="Register" icon="user-plus">
+    Click **Sign Up** and provide your email, city name, and role (Operator or Admin).
+  </Step>
+  <Step title="Verify Email" icon="mail">
+    Check your inbox for a verification link and click it to activate your account.
+  </Step>
+</Steps>
+
+## Log In and Dashboard Tour
+
+Once registered, log in to explore the real-time city intelligence.
+
+<Tabs>
+  <Tab title="Web Dashboard" icon="globe">
+    <Steps>
+      <Step title="Access Dashboard" icon="monitor">
+        Enter your credentials at `https://neurogrid-ai.vercel.app/auth/login`.
+      </Step>
+      <Step title="Explore Sections">
+        Review **Live Feeds** for camera streams, **AI Insights** for recommendations, and **Alerts** for congestion.
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Citizen App" icon="smartphone">
+    Download the APK from [GitHub releases](https://github.com/madhavansingh/NeuroGrid-apk/releases).
+
+    ```bash
+    # Install on Android (arm64)
+    adb install app-arm64-v8a-release.apk
+    ```
+
+    Open the app to view public traffic insights and alerts.
+  </Tab>
+</Tabs>
+
+## Connect Your First Data Source
+
+Integrate a camera or sensor stream using the Neuro Grid API.
+
+<ParamField header="Authorization" param-type="string" required="true">
+  Bearer `{YOUR_API_KEY}`
+</ParamField>
+
+<ParamField body="url" param-type="string" required="true">
+  RTSP or HTTP stream URL, e.g., `rtsp://camera.example.com/stream`.
+</ParamField>
+
+<ParamField body="zone" param-type="string" required="false">
+  City zone label like `Zone-C`.
+</ParamField>
+
+Use this example to add a camera:
+
+<CodeGroup tabs="JavaScript,cURL">
+  ```javascript
+  const response = await fetch('https://api.example.com/v1/sensors', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer YOUR_API_KEY',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      url: 'rtsp://your-camera.example.com/live',
+      zone: 'Zone-A',
+      type: 'traffic-camera'
+    })
+  });
+  ```
+  ```bash
+  curl -X POST https://api.example.com/v1/sensors \
+    -H "Authorization: Bearer YOUR_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{
+      "url": "rtsp://your-camera.example.com/live",
+      "zone": "Zone-A",
+      "type": "traffic-camera"
+    }'
+  ```
+</CodeGroup>
+
+Verify the connection in your dashboard under **Live Feeds**.
+
+## Generate Your First AI Insight
+
+Query the AI copilot for actionable recommendations.
+
+```javascript
+// WebSocket for real-time insights
+const ws = new WebSocket('wss://api.example.com/v1/insights?zone=Zone-A');
+ws.onmessage = (event) => {
+  const insight = JSON.parse(event.data);
+  console.log(insight.message); // e.g., "Zone C congestion rising. Rerouting active."
+};
+```
+
+<Expandable title="Advanced: Custom Query Parameters" default-open="false">
+  Add filters like `severity>medium` for targeted alerts.
+
+  <ParamField query="severity" param-type="string" required="false">
+    Filter level: `low`, `medium`, `high`.
+  </ParamField>
+</Expandable>
+
+## Next Steps
+
+<Columns cols={2}>
+  <Card title="Explore Features" icon="zap" href="/introduction">
+    Dive into real-time traffic intelligence and AI copilot capabilities.
+  </Card>
+  <Card title="Authentication" icon="shield" href="/authentication">
+    Secure your API access with advanced auth methods.
+  </Card>
+  <Card title="Configuration" icon="settings" href="/configuration">
+    Customize zones, alerts, and data pipelines.
+  </Card>
+  <Card title="Changelog" icon="git-branch" href="/changelog">
+    Stay updated with the latest platform releases.
+  </Card>
+</Columns>
+
+<Callout kind="success">
+  You're now monitoring your city in real-time! Check the dashboard for live insights.
+</Callout>
